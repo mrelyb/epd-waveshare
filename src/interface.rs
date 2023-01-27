@@ -68,12 +68,7 @@ where
         // high for data
         let _ = self.dc.set_high();
 
-        for val in data.iter().copied() {
-            // Transfer data one u8 at a time over spi
-            self.write(spi, &[val])?;
-        }
-
-        Ok(())
+        self.write(spi, data)
     }
 
     /// Basic function for sending [Commands](Command) and the data belonging to it.
@@ -98,13 +93,15 @@ where
         val: u8,
         repetitions: u32,
     ) -> Result<(), SPI::Error> {
+        let mut array: [u8; 30000] = [0; 30000];
+        for i in 0..repetitions as usize {
+            array[i] = val;        
+        }
+        
         // high for data
         let _ = self.dc.set_high();
         // Transfer data (u8) over spi
-        for _ in 0..repetitions {
-            self.write(spi, &[val])?;
-        }
-        Ok(())
+        self.write(spi, &array)        
     }
 
     // spi write helper/abstraction function
