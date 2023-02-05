@@ -425,9 +425,6 @@ mod tests {
 
         let buffer = display.buffer();
 
-        extern crate std;
-        std::println!("{:?}", buffer);
-
         assert_eq!(buffer[0], Color::Black.get_byte_value());
 
         for &byte in buffer.iter().skip(1) {
@@ -444,9 +441,6 @@ mod tests {
             .draw(&mut display);
 
         let buffer = display.buffer();
-
-        extern crate std;
-        std::println!("{:?}", buffer);
 
         assert_eq!(buffer[0], Color::Black.get_byte_value());
 
